@@ -9,11 +9,14 @@ const app = express();
 
 const connect = require("./configs/db");
 const taskRoute = require("./routes/task.routes");
+const sprintRoute = require("./routes/sprints.routes");
 
 
 app.use(express.json())
 app.use(cors());
 app.use("/tasks", taskRoute);
+app.use("/sprints", sprintRoute);
+
 
 app.get("/", (req, res) => {
     res.send("hello")

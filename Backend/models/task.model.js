@@ -21,6 +21,10 @@ const taskSchema = new mongoose.Schema({
             values: ['bug', 'feature', 'story'],
             message: "Please choose between bug, feature or story!"
         }
+    },
+    sprint: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'sprints'
     }
 }, { versionKey: false, timestamps: true })
 

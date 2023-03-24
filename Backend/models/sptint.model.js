@@ -6,16 +6,17 @@ const sprintSchema = new mongoose.Schema({
     required: true,
   },
   tasks: {
-    typeof: [
+    type: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "tasks"
+        ref: "tasks",
+        immutable: true
       }
     ],
     default: []
   }
 }, { versionKey: false });
 
-const Sprint = mongoose.model("sprint", sprintSchema);
+const SprintModel = mongoose.model("sprint", sprintSchema);
 
-module.exports = Sprint;
+module.exports = SprintModel;

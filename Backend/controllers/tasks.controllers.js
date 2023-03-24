@@ -22,14 +22,26 @@ const getSingleTask = async (req, res) => {
 };
 
 const postTask = async (req, res) => {
+    // console.log(req.body)
     const task = req.body.task;
-    const sprint = req.body.sprint;
+    const name = req.body.sprint;
+    if (!task || !name || typeof name !== 'string') {
+        res.status(400).send({ message: "task or sprint is not provided properly!" })
+        return;
+    }
     try {
-        const newTask = new taskModel(task);
-        const matchedSprint = sprintModel.find({ name: sprint });
-        matchedSprint.tasks = [...matchedSprint.tasks, newTask._id];
-        await newTask.save();
-        await matchedSprint.save();
+        const matchedSprint = await sprintModel.findOne({ name });
+        // console.log(matchedSprint);
+        const sprintId = matchedSprint._id;
+        const newTask = new taskModel({ ...task, sprint: sprintId });
+        const newTaskId = newTask._id;
+        // matchedSprint.tasks = [...matchedSprint.tasks, newTaskId];
+        // matchedSprint.tasks .push( [ newTaskId]);
+        console.log(newTaskId);
+        
+         console.log(matchedSprint.tasks);
+        // await newTask.save();
+        // await matchedSprint.save();
         res.status(201).send({ message: "Task added succesfully" })
     } catch (error) {
         res.status(500).send({ message: "Something went wrong!", error: error.message })
